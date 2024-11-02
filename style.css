@@ -1,0 +1,412 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  position: relative;
+}
+
+/* Global CSS */
+
+h1 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 60px;
+}
+h3 {
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
+  font-weight: 500;
+}
+
+#w-btn{
+  margin-left: 40px;
+  background-color: #fff;
+  padding: 9px 30px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: none;
+  border: none;
+}
+
+#g-btn{
+  text-decoration: none;
+  background-color: #51a995;
+  color: #fff;
+  padding: 9px 30px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.sec-space {
+  padding: 4rem 0;
+}
+.extra-space {
+  padding-top: 8rem;
+}
+.obj-width {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/*Navbar*/
+
+header {
+  background-color: #1f4a40;
+  position: flex;
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+#navbar .logo {
+  width: 120px;
+}
+
+#menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+}
+
+#menu li a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 40px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+
+#bar{
+  color: #fff;
+  display: none;
+}
+
+.hero{
+  background-color: #1f4a40;
+}
+
+
+
+.hero-box{
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+  align-items: center;
+}
+
+.h-right{
+  width: 50%;
+}
+
+.h-right img{
+  width: 100%;
+  object-fit: cover;
+}
+
+.h-left{
+  width: 45%;
+  color: #fff;
+}
+
+.h-left p{
+  padding: 1.5rem 0;
+}
+
+.search{
+  position: relative;
+}
+
+.search a:hover {
+  transform: scale(1.1);
+}
+
+.search a span{
+  text-shadow: 0 0 25px var(#244f45);
+}
+
+.search input{
+  width: 100%;
+  height: 4rem;
+  border-radius: 35px;
+  padding: 0 20px;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  transition: all 0.3s ease;
+
+}
+
+.search a{
+  position: absolute;
+  top: 12px;
+  right: 20px;
+
+}
+
+.h-right{
+  width: 50%;
+}
+
+.h-right img{
+  width: 100%;
+  object-fit: cover;
+}
+
+
+/* Features Section */
+.features {
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.feature-items {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.feature {
+  flex-basis: 30%;
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature i {
+  font-size: 2rem;
+  color: #51a995;
+  margin-bottom: 1rem;
+}
+
+/* Job Listing Section */
+.jobs {
+  background-color: #fff;
+  text-align: center;
+}
+
+.job-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.job-item {
+  padding: 2rem;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Brand Section */
+.brands {
+  text-align: center;
+}
+
+.brand-logos {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.brand-logos img {
+  width: 150px;
+  height: auto;
+}
+
+/* Team Section */
+.team {
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.team-members {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+}
+
+.member {
+  flex-basis: 30%;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.member img {
+  width: 100%;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+footer {
+  background-color: #1f4a40;
+  color: white;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.jobs .job-id{
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+}
+
+.jobs .job-id li{
+  padding: 20px 40px;
+  cursor: pointer;
+  color: #000;
+}
+
+.jobs .job-id li.active{
+  background-color: #51a995;
+  color: #fff;
+}
+
+.jobs .jList{
+  margin: 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid #ccc;
+  align-items: center;
+  justify-items: start;
+  cursor: pointer;
+  color: #000;
+  padding: 2rem 2rem;
+}
+
+.jobs .jList.delete{
+  display: none;
+}
+
+
+
+.jobs .jList:hover{
+  background: #ecf1ee;
+}
+
+.jobs .jList img{
+  width: 40px;
+}
+
+.jobs .jList h3 {
+  padding-bottom: 0;
+}
+
+
+@media(max-width:699px){
+  #menu {
+    background-color: #fff;
+    display: block;
+    width: 280px;
+    height: auto;
+    position: absolute;
+    top: 80px;
+    right: -100%;
+    padding: 30px 0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 13px;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+#menu.active {
+  right: 10px;
+  opacity: 1;
+}
+
+#menu li{
+  padding: 1rem;
+}
+
+#menu li a {
+  color: #1f4a40;
+}
+
+#bar{
+  display: block;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+#w-btn {
+  margin: 20px 0 0 50px;
+  background: #1f4a40;
+  color: #fff;
+}
+
+.hero-box{
+  flex-direction: column-reverse;
+  justify-content: center;
+  height: auto;
+  align-items: start;
+  padding: 8rem 0;
+}
+.h-left {
+  width: 100%;
+}
+/*
+.h-right {
+  display: none;
+}
+*/
+
+.h-right img {
+  width: 120%;
+  object-fit: cover;
+}
+
+
+}
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .feature, .member {
+    flex: 1 1 100%; /* Full width on very small screens */
+  }
+
+  .brand-logos img {
+    width: 80px;
+  }
+}
+
+}
