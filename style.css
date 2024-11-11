@@ -5,6 +5,10 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+  outline: none;
+  border: none;
+
 }
 
 body {
@@ -22,6 +26,7 @@ h2 {
   font-size: 2rem;
   font-weight: 600;
   line-height: 60px;
+  padding-bottom: 2rem;
 }
 h3 {
   font-size: 1.2rem;
@@ -40,6 +45,8 @@ h3 {
   border: none;
 }
 
+
+
 #g-btn{
   text-decoration: none;
   background-color: #51a995;
@@ -55,12 +62,13 @@ h3 {
 .extra-space {
   padding-top: 8rem;
 }
-.obj-width {
-  max-width: 1200px;
-  margin: auto;
-}
+
+
 
 /*Navbar*/
+
+
+
 
 header {
   background-color: #1f4a40;
@@ -70,6 +78,7 @@ header {
   width: 100%;
   z-index: 999;
 }
+
 
 #navbar {
   display: flex;
@@ -82,20 +91,70 @@ header {
   width: 120px;
 }
 
+.logo:hover{
+  transform: scale(1.1);
+}
+
 #menu {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   list-style: none;
+  padding: 10px 20px;
+}
+.dropDown a{
+  color: black;
+  font-size: 1.1rem;
 }
 
 #menu li a {
-  color: #fff;
+  color:#fff;
   text-decoration: none;
   margin-left: 40px;
   font-size: 1.1rem;
   font-weight: 500;
 }
+
+#menu li a:hover{
+  color: black;
+}
+
+
+ul li ul.dropDown li {
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 500;
+  
+  
+}
+
+ul li ul.dropDown {
+  width: auto;
+  background: ;
+  border-radius: 13px;
+  position: absolute;
+  z-index: 999;
+  display: none;
+  background: #51a995;
+  
+  
+
+}
+
+ul li a:hover{
+  background: ;
+  background-color: ;
+  transform: scale(1.1);
+  
+}
+
+ul li:hover ul.dropDown{
+  display: block;
+  
+
+}
+
+
 
 
 #bar{
@@ -155,6 +214,8 @@ header {
   outline: none;
   border: none;
   transition: all 0.3s ease;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 
 }
 
@@ -200,12 +261,16 @@ header {
   font-size: 2rem;
   color: #51a995;
   margin-bottom: 1rem;
+  transition: all 0.3s ease;
 }
+
+
 
 /* Job Listing Section */
 .jobs {
   background-color: #fff;
   text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .job-list {
@@ -263,13 +328,77 @@ header {
   margin-bottom: 1rem;
 }
 
-/* Footer */
+/* Footer 
 footer {
   background-color: #1f4a40;
   color: white;
   text-align: center;
   padding: 2rem 0;
 }
+*/
+
+
+
+
+.footer{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding: 40px 0;
+  background-color: #1f4a40;
+}
+.footer .social{
+  text-align: center;
+  padding-bottom: 25px;
+  color: #fff;
+}
+.footer .social a{
+  font-size: 25px;
+  color: var(--main-color);
+  border: 2px solid #fff;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  display: inline-block; 
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 10px;
+  transition: 0.3s ease-in-out;
+}
+.footer .social a:hover{
+  transform: scale(1.2)translateY(-10px);
+  background-color: #fff;
+  color: black;
+  box-shadow: 0 0 0 #fff;
+}
+.footer ul{
+  margin-top: 0; 
+  padding: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 0;
+  text-align: center;
+}
+.footer ul li a{
+  color: #fff;
+  border-bottom: 3px solid transparent;
+  transition: 0.3s ease-in-out;
+}
+.footer ul li a:hover{
+  border-bottom: 3px solid #1f4a40;
+}
+.footer ul li{
+  display: inline-block;
+  padding:0 15px;
+  
+}
+.footer .copyright{
+  margin-top: 50px;
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+}
+
 
 .jobs .job-id{
   margin-top: 3rem;
@@ -321,8 +450,21 @@ footer {
   padding-bottom: 0;
 }
 
+.brands .brand-logos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding-top: 3rem;
+}
 
-@media(max-width:699px){
+.brands .brand-logos img {
+  margin: 1rem 1rem 1rem 0;
+
+}
+
+
+@media(max-width:775px){
   #menu {
     background-color: #fff;
     display: block;
@@ -347,6 +489,8 @@ footer {
   padding: 1rem;
 }
 
+
+
 #menu li a {
   color: #1f4a40;
 }
@@ -356,6 +500,20 @@ footer {
   font-size: 1.7rem;
   cursor: pointer;
 }
+
+ul li ul.dropDown{
+  background: #fff;
+  
+
+}
+
+.h-right img {
+  width: 120%;
+  object-fit: cover;
+  
+}
+
+
 
 #w-btn {
   margin: 20px 0 0 50px;
@@ -373,15 +531,73 @@ footer {
 .h-left {
   width: 100%;
 }
-/*
+
 .h-right {
   display: none;
 }
-*/
 
-.h-right img {
-  width: 120%;
-  object-fit: cover;
+.features .fe-box div {
+  width: 40%;
+}
+
+.h-right img{
+  width: ;
+  object-fit: contain;
+}
+
+
+
+.jobs .job-id{
+  position: relative;
+  width: 100%;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+ 
+}
+
+.jobs .jobs-id li{
+  padding: 20px 30px;
+  text-wrap: nowrap;
+  
+}
+
+.jobs-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.jobs .jList {
+  width: 40%;
+  margin-top: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 15px;
+  padding: 2rem 1rem;
+  text-align: center;
+  justify-items: center;
+}
+
+.feature-items {
+  display: grid;
+  gap: 20px;
+  padding-bottom: 7rem;
+  grid-template-columns: repeat(1,1fr);
+  margin: 0 5rem;
+}
+
+.job-list {
+  display: grid;
+  gap: 20px;
+  padding-bottom: 7rem;
+  grid-template-columns: repeat(1,1fr);
+  margin: 0 5rem;
+}
+
+.contact form{
+  flex-direction: column;
 }
 
 
@@ -407,6 +623,10 @@ footer {
   .brand-logos img {
     width: 80px;
   }
+
+
+
+
 }
 
 }
