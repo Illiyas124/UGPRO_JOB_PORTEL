@@ -57,7 +57,7 @@ h3 {
 }
 
 .sec-space {
-  padding: 4rem 0;
+  padding: 6rem 0;
 }
 .extra-space {
   padding-top: 8rem;
@@ -72,7 +72,7 @@ h3 {
 
 header {
   background-color: #1f4a40;
-  position: flex;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
@@ -507,11 +507,6 @@ ul li ul.dropDown{
 
 }
 
-.h-right img {
-  width: 120%;
-  object-fit: cover;
-  
-}
 
 
 
@@ -527,23 +522,31 @@ ul li ul.dropDown{
   height: auto;
   align-items: start;
   padding: 8rem 0;
+  align-items: center;
 }
 .h-left {
   width: 100%;
 }
 
 .h-right {
-  display: none;
+  display: block !important;;
+  width: 100%;
 }
+
+.h-right img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin-top: 1rem;
+}
+
 
 .features .fe-box div {
   width: 40%;
 }
 
-.h-right img{
-  width: ;
-  object-fit: contain;
-}
+
 
 
 
@@ -623,6 +626,14 @@ ul li ul.dropDown{
   .brand-logos img {
     width: 80px;
   }
+
+  .h-right img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
 
 
 
