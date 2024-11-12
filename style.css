@@ -38,12 +38,15 @@ h3 {
   margin-left: 40px;
   background-color: #fff;
   padding: 9px 30px;
-  border-radius: 20px;
+  border-radius: 25px;
   font-size: 1.2rem;
   font-weight: 500;
   box-shadow: none;
   border: none;
 }
+
+
+
 
 
 
@@ -63,7 +66,10 @@ h3 {
   padding-top: 8rem;
 }
 
-
+.obj-width {
+  max-width: 1200px;
+  margin: auto;
+}
 
 /*Navbar*/
 
@@ -116,7 +122,9 @@ header {
 }
 
 #menu li a:hover{
-  color: black;
+  color: #c2f2d0;
+  transition: 0.3s ease;
+  
 }
 
 
@@ -145,13 +153,12 @@ ul li a:hover{
   background: ;
   background-color: ;
   transform: scale(1.1);
+  transition: 0.3s;
   
 }
 
 ul li:hover ul.dropDown{
   display: block;
-  
-
 }
 
 
@@ -424,12 +431,13 @@ footer {
   margin: 3rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px solid #ccc;
+  border: 1px solid #dee2e6;
   align-items: center;
   justify-items: start;
   cursor: pointer;
   color: #000;
   padding: 2rem 2rem;
+  border-radius: 15px;
 }
 
 .jobs .jList.delete{
@@ -461,6 +469,85 @@ footer {
 .brands .brand-logos img {
   margin: 1rem 1rem 1rem 0;
 
+}
+
+.brand-logos img:hover {
+  transform: scale(1.1);
+}
+
+.jList:hover {
+  transform: scale(1.1);
+  background-color: #dee2e6;
+}
+
+.feature:hover {
+  transform: scale(1.1);
+  background-color: #dee2e6;
+}
+
+.member:hover {
+  transform: scale(1.1);
+  background-color: #dee2e6;
+}
+
+.job-item:hover{
+  transform: scale(1.1);
+}
+
+/* footer */
+
+footer {
+  background: #1f4a40;
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.top .logo {
+  width: 170px;
+  margin-bottom: 1rem;
+}
+
+.top i{
+  color: #fff;
+  font-size: 2rem;
+  margin-left: 0.5rem;
+
+}
+
+.bottom {
+  padding-top: 2rem;
+  text-align: start;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.bottom div {
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom a{
+  text-decoration: none;
+  color: #fafafa;
+  line-height: 35px;
+  font-size: 1.1rem;
+}
+
+
+
+@media(max-width: 1200px){
+  .obj-width {
+    width: 95%;
+  }
 }
 
 
@@ -603,8 +690,18 @@ ul li ul.dropDown{
   flex-direction: column;
 }
 
+/* footer */
+.bottom div {
+  width: 50%;
+  margin-bottom: 50px; 
+}
+.top i{
+  margin: 1rem 1rem 0 0;
 
 }
+
+}
+
 
 @media (max-width: 576px) {
   h1 {
