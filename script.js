@@ -16,3 +16,27 @@ sortBtns.forEach((btn) => {
         });
     });
 });
+
+function showRegisterOptions() {
+    document.getElementById('registerModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('registerModal').style.display = 'none';
+}
+
+function redirectTo(role) {
+    closeModal();
+    if (role === 'undergraduate') {
+        window.location.href = 'signup_undergraduate.html'; // Link to Undergraduate signup page
+    } else if (role === 'employer') {
+        window.location.href = 'signup_employer.html'; // Link to Employer signup page
+    }
+}
+
+// Optional: Close modal when clicking outside of the modal content
+window.onclick = function(event) {
+    if (event.target == document.getElementById('registerModal')) {
+        closeModal();
+    }
+};

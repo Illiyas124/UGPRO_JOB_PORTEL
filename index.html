@@ -38,12 +38,25 @@
                     </li>
                     <li><a href="jobs/job.html">Browse Job</a></li>
                     <li><a href="contact">Contact Us</a></li>
-                    <button id="w-btn">Register</button>
+                    <!--<button id="w-btn">Register</button>-->
+                    <button onclick="showRegisterOptions()" id="w-btn">Register</button>
+
                 </ul>
 
                 
             </div>
         </header>
+
+        <!-- Register Options Modal -->
+<div id="registerModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span onclick="closeModal()" class="close">&times;</span>
+        <h3>Select Your Role</h3>
+        <button onclick="redirectTo('undergraduate')" class="modal-button">I am an Undergraduate</button>
+        <button onclick="redirectTo('employer')" class="modal-button">I am an Employer</button>
+    </div>
+</div>
+
 
   
         
