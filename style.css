@@ -494,6 +494,24 @@ footer {
   transform: scale(1.1);
 }
 
+.features .fe-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.features .fe-box .img {
+  width: 50px;
+  margin-top: 3rem;
+}
+
+.features .fe-box div{
+  width: 200px;
+}
+
+
+
 /* footer */
 
 footer {
@@ -605,6 +623,31 @@ footer {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+/* job Details page */
+.job-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fcfa;
+  border: 1px solid #51a995;
+  border-radius: 38px;
+  padding: 2rem;
+}
+
+.job-img-row {
+  display: flex;
+  align-items: center;
+}
+
+.job-header img {
+  width: 100px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 15px;
+  margin-right: 2rem;
+
 }
 
 
