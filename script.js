@@ -28,9 +28,9 @@ function closeModal() {
 function redirectTo(role) {
     closeModal();
     if (role === 'undergraduate') {
-        window.location.href = 'signup_undergraduate.html'; // Link to Undergraduate signup page
+        window.location.href = 'signup_undergraduate.php'; // Link to Undergraduate signup page
     } else if (role === 'employer') {
-        window.location.href = 'signup_employer.html'; // Link to Employer signup page
+        window.location.href = 'signup_employer.php'; // Link to Employer signup page
     }
 }
 
