@@ -193,5 +193,31 @@
     </div>
 </div>
 
+<?php 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Collect form data
+        $fullName = mysqli_real_escape_string($connect, $_POST['fullName']);
+        $email = mysqli_real_escape_string($connect, $_POST['email']);
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hash
+    
+        // Debug: Check if data is being passed correctly
+        echo "Full Name: " . $fullName . "<br>";
+        echo "Email: " . $email . "<br>";
+    
+        // Insert into database
+        $sql = "INSERT INTO undergraduate (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
+    
+        if (mysqli_query($connect, $sql)) {
+            echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
+            echo "<script>window.location.href = 'signin_undergraduate.php';</script>";
+            exit();
+        } else {
+            // Debug: Check the error message
+            echo "<script>alert('Error: " . mysqli_error($connect) . "');</script>";
+        }
+    }
+    
+?>
+
 </body>
 </html>
