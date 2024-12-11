@@ -28,7 +28,7 @@ const displayItems = (items) => {
         // Add event listner element
         jList.addEventListener("click", () => {
             //alert(`You clicked on item ${index + 1}`);
-            window.location.hash =`job-details.html`;
+            window.location.hash =`job-details.php`;
         });
     });
 };
