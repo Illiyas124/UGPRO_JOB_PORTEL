@@ -21,7 +21,7 @@
         <!-- Header  Section-->
         <header>
     <div id="navbar" class="obj-width" >
-        <a href="index.html" ><img class="logo" src="images/logo.png"></a>
+        <a href="index.php" ><img class="logo" src="images/logo.png"></a>
 
         <i id="bar" class='bx bx-menu '></i>
         <ul id="menu">
@@ -35,8 +35,8 @@
                     <li><a href="#meetTheTeam">Meet the Team</a></li>
                 </ul>
             </li>
-            <li><a href="jobs/job.html">Browse Job</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="jobs/job.php">Browse Job</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
             <!--<button id="w-btn">Register</button>-->
             <button onclick="showRegisterOptions()" id="w-btn">Register</button>
 
@@ -47,7 +47,7 @@
 </header>
 
         
-        <?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php"; include_once($IPATH."header.html"); ?>
+       
 
 
 

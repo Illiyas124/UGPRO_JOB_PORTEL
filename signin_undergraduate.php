@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UgPro Employer Sign In</title>
+    <title>UgPro Undergraduate Sign In</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
@@ -76,10 +76,9 @@
 <body>
 
 <div class="container">
-    <h2>Sign in as an Employer</h2>
+    <h2>Sign in as an Undergraduate</h2>
 
-    <!-- Corrected form onsubmit to call loginEmployer function -->
-    <form onsubmit="loginEmployer(event)">
+    <form onsubmit="signinUndergraduate(event)">
         <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" placeholder="Enter your email address" required>
@@ -93,7 +92,7 @@
     </form>
 
     <div class="signup-link">
-        <p>Don't have an account? <a href="signup_employer.html">Sign up as an Employer</a></p>
+        <p>Don't have an account? <a href="signup_undergraduate.php">Sign up as an Undergraduate</a></p>
     </div>
 </div>
 
@@ -110,19 +109,55 @@
         }
     }
 
-    function loginEmployer(event) {
+    function signinUndergraduate(event) {
         event.preventDefault();
+        
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // Replace this with real authentication logic
-        if (email === "employer@gmail.com" && password === "1234") {
-            // Store employer data in localStorage for session management
-            localStorage.setItem('employer', JSON.stringify({ email: email }));
-            // Redirect to profile_employer.html after successful login
-            window.location.href = "profile_employer.html";
+        const users = [
+            {
+                email: 'undergraduate@gmail.com',
+                password: '1234',
+                name: 'John Doe',
+                course: 'Computer Science',
+                skills: 'JavaScript, Python, HTML/CSS',
+                projects: 'Portfolio Website, Inventory Management System',
+                github: 'https://github.com/johndoe',
+                linkedin: 'https://linkedin.com/in/johndoe',
+                profileImage: 'https://via.placeholder.com/150'
+            },
+            {
+                email: 'jane.doe@gmail.com',
+                password: 'abcd',
+                name: 'Jane Smith',
+                course: 'Software Engineering',
+                skills: 'Java, C++, SQL',
+                projects: 'Inventory Management, E-commerce Website',
+                github: 'https://github.com/janedoe',
+                linkedin: 'https://linkedin.com/in/janedoe',
+                profileImage: 'https://via.placeholder.com/150'
+            },
+            {
+                email: 'michael.smith@gmail.com',
+                password: 'xyz123',
+                name: 'Michael Smith',
+                course: 'Information Technology',
+                skills: 'PHP, MySQL, CSS',
+                projects: 'Blog Platform, Task Management System',
+                github: 'https://github.com/michaelsmith',
+                linkedin: 'https://linkedin.com/in/michaelsmith',
+                profileImage: 'https://via.placeholder.com/150'
+            }
+        ];
+
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            window.location.href = "profile_undergraduate.php";
         } else {
-            alert("Incorrect email or password. Please try again.");
+            alert("Invalid email or password.");
         }
     }
 </script>

@@ -23,13 +23,13 @@
 
         <header>
             <div id="navbar" class="obj-width" >
-                <a href="../index.html" ><img class="logo" src="../images/logo.png"></a>
+                <a href="../index.php" ><img class="logo" src="../images/logo.png"></a>
 
                 <i id="bar" class='bx bx-menu '></i>
                 <ul id="menu">
-                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.php">Home</a></li>
                     
-                    <li><a href="../contact.html">Contact Us</a></li>
+                    <li><a href="../contact.php">Contact Us</a></li>
                     <button id="w-btn">Register</button>
                 </ul>
 

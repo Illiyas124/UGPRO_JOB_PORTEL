@@ -186,13 +186,13 @@
         });
     } else {
         alert("You are not logged in.");
-        window.location.href = "signin_undergraduate.html"; // Redirect to sign-in page
+        window.location.href = "signin_undergraduate.php"; // Redirect to sign-in page
     }
 
     // Logout function
     function logout() {
         localStorage.removeItem('user');
-        window.location.href = "signin_undergraduate.html"; // Redirect to sign-in page
+        window.location.href = "signin_undergraduate.php"; // Redirect to sign-in page
     }
 </script>
 

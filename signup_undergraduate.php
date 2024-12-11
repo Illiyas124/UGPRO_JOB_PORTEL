@@ -154,7 +154,7 @@
 
 <div class="container">
     <div class="left">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="images/logo.png" width="200" height="200" alt="UgPro Logo" class="me-2">      
         </a>
         <strong class="ugpro-logo">UgPro</strong>
@@ -187,7 +187,7 @@
         </div>
 
         <div class="signin-link">
-            <p>Already have an account? <a href="signin_undergraduate.html">Sign in</a></p>
+            <p>Already have an account? <a href="signin_undergraduate.php">Sign in</a></p>
 
         </div>
     </div>

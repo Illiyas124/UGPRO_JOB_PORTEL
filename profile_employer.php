@@ -176,13 +176,13 @@
 
     function logout() {
         localStorage.removeItem("employer");
-        window.location.href = "signin_employer.html";
+        window.location.href = "signin_employer.php";
     }
 
     window.onload = function() {
         const employerData = localStorage.getItem("employer");
         if (!employerData) {
-            window.location.href = "signin_employer.html"; // Redirect if not signed in
+            window.location.href = "signin_employer.php"; // Redirect if not signed in
         } else {
             renderProfiles();
         }

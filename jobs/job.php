@@ -22,13 +22,13 @@
 
         <header>
             <div id="navbar" class="obj-width" >
-                <a href="../index.html" ><img class="logo" src="../images/logo.png"></a>
+                <a href="../index.php" ><img class="logo" src="../images/logo.png"></a>
 
                 <i id="bar" class='bx bx-menu '></i>
                 <ul id="menu">
-                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.php">Home</a></li>
                     
-                    <li><a href="../contact.html">Contact Us</a></li>
+                    <li><a href="../contact.php">Contact Us</a></li>
                     <button id="w-btn">Register</button>
                 </ul>
 
@@ -36,45 +36,28 @@
             </div>
         </header>
 
-       <div id="jobDetails" class="extra-space obj-width">
-        <div class="job-header">
-            <div class="job-img-row">
-                <img src="../images/google.png" alt="">
-                <div>
-                    <h2>Google</h2>
-                    <span>USA</span>
-                </div>
-            </div>
-            <a id="g-btn" href="#">Apply Now</a>
-        </div>
+        <!-- Job Listing  Section-->
 
-        <section class="features sec-space obj-width">
-            <div class="fe-box">
-                <div>
-                    <img src="../images/vacancy.png" alt="">
-                    <h3>vacancy</h3>
-                    <p>
-                        01 Vacancy
-                    </p>
-                </div>
-                <div>
-                    <img src="../images/fe 1.png" alt="">
-                    <h3>Position</h3>
-                    <p>Web Developer</p>
-                </div>
-                <div>
-                    <img src="../images/hour.png" alt="">
-                    <h3>Hours</h3>
-                    <p>50h /week</p>
-                </div>
-                <div>
-                    <img src="../images/salary.png" alt="">
-                    <h3>Salary</h3>
+        <section class="jobs sec-space obj-width extra-space" id="jobs">
+            <h2>Jobs in demand</h2>
+            <p>Most viewed and all-time top-selling services</p>
+
+            <form >
+                <i class="bx bx-search-alt-2"></i>
+                <input type="text" placeholder="Search Jobs" id="searchBar">
+            </form>
+
+            
+
+            <div class="jobs-container" id="root">
+                <li data-item="fullTime" class="jList">
+                    <img src="images/google.png" alt="">
+                    <h3>Web Developer</h3>
                     <p>$900-1200/m</p>
-                </div>
+                    <span id="key">Full Time</span>
+                </li>
             </div>
         </section>
-       </div>
       
 
 
