@@ -19,6 +19,32 @@
         
 
         <!-- Header  Section-->
+        <header>
+    <div id="navbar" class="obj-width" >
+        <a href="index.html" ><img class="logo" src="images/logo.png"></a>
+
+        <i id="bar" class='bx bx-menu '></i>
+        <ul id="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Features <i class='bx bx-caret-down'></i></a>
+                <ul class="dropDown">
+                    <li><a href="#jobs">Jobs in demand</a></li>
+                    <li><a href="#whyChooseUs">Why Choose Us?</a></li>
+                    <li><a href="#latestJobListings">Latest Job Listings</a></li>
+                    <li><a href="#ourPartnerCompanies">Our Partner Companies</a></li>
+                    <li><a href="#meetTheTeam">Meet the Team</a></li>
+                </ul>
+            </li>
+            <li><a href="jobs/job.html">Browse Job</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <!--<button id="w-btn">Register</button>-->
+            <button onclick="showRegisterOptions()" id="w-btn">Register</button>
+
+        </ul>
+
+        
+    </div>
+</header>
 
         
         <?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php"; include_once($IPATH."header.html"); ?>
@@ -175,37 +201,7 @@
 
 
 
-     <!-- Brand  Section-->
-<!--
-     <section class="trust sec-space obj-width">
-
-        <h2>Trusted by the world's best</h2>
-        <p>Most viewed and all-time top-selling services</p>
-
-        <div class="t-box">
-            
-        </div>
-    </section>
-
-
-    <section class="team sec-space obj-width">
-
-        <h2>Highest Rated Freelancers</h2>
-        <p>Most viewed and all-time top-selling services</p>
-
-        <div class="team-container">
-            <div class="f1-box">
-                <img src="images/t1.png" alt="">
-            <img src="images/t2.png" alt="">
-            <img src="images/t3.png" alt="">
-            <img src="images/t4.png" alt="">
-            <img src="images/t5.png" alt="">
-            <img src="images/t6.png" alt="">
-
-                <a href=""></a>
-            </div>
-        </div>
-    </section>-->
+ 
 
     <!-- Brand Section -->
     <section class="brands sec-space" id="ourPartnerCompanies">
@@ -242,61 +238,59 @@
 
 
 
-    <!-- contact us-->
 
 
 
-    <!-- Footer Section 
-   <footer>
-    
-        <div class="obj-width">
-            <p>&copy; 2024 UgPro. All Rights Reserved.</p>
-        </div>
-    </footer>
--->
-    <!--
+
+    <!-- Footer Section -->
 
     <footer class="footer">
-        <div class="social">
-           
-
+    <div class="obj-width">
+        <div class="top">
+            <div>
+                <img class="logo" 
+                src="images/logo.png" alt="">
+                <p>University-powered job portal,Showcasing top telants to lead...</p>
+            </div>
+            <div>
                 <a href="#" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
                 <a href="#" title="GitHub"><i class='bx bxl-github'></i></a>
                 <a href="#" title="Twitter"><i class='bx bxl-twitter'></i></a>
-
+            </div>
         </div>
+        <div class="bottom">
+            <div>
+                <h3>Project</h3>
+                <a href="#">Changelog</a>
+                <a href="#">Status</a>
+                <a href="#">Licence</a>
+                <a href="#">All version</a>
+            </div>
+            <div>
+                <h3>Community</h3>
+                <a href="#">Github</a>
+                <a href="#">Issues</a>
+                <a href="#">Licence</a>
+                <a href="#">All version</a>
+            </div>
+            <div>
+                <h3>Help</h3>
+                <a href="#">Support</a>
+                <a href="#">Troubleshooting</a>
+                <a href="#">Contact Us</a>
+                
+            </div>
+            <div>
+                <h3>Others</h3>
+                <a href="#">Teerms of Service</a>
+                <a href="#">Privacy</a>
+                <a href="#">Licence</a>
+                
+            </div>
+        </div>
+    </div>
+</footer>
 
-        <ul class="list">
-            <li>
-                <a href="#">FAQ</a>
-            </li>
-
-            <li>
-                <a href="#">Services</a>
-            </li>
-
-            <li>
-                <a href="#education">About Me</a>
-            </li>
-
-            <li>
-                <a href="#contact">Contact</a>
-            </li>
-
-            <li>
-                <a href="#testimonials">Testimonials</a>
-            </li>
-
-
-        </ul>
-        <p class="copyright">
-            &#169 University of Vavuniya UgPro. All Rights Reserved.
-        </p>
-    </footer>
-
--->
-
-<?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php"; include($IPATH."footer.html"); ?>
 
 
     
