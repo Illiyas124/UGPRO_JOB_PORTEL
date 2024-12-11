@@ -1,12 +1,35 @@
+<?php
+// Include the database connection
+include('conf/dbconf.php');
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Collect form data
+    $companyName = mysqli_real_escape_string($connect, $_POST['company_name']);
+    $email = mysqli_real_escape_string($connect, $_POST['email']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+
+    // Insert into the employer table
+    $sql = "INSERT INTO employers (company_name, email, password) VALUES ('$companyName', '$email', '$password')";
+    if (mysqli_query($connect, $sql)) {
+        // Redirect to employer login page
+        header("Location: signin_employer.php");
+        exit();
+    } else {
+        $error = "Error: " . mysqli_error($connect);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UgPro Employer Sign Up</title>
-    <!-- Bootstrap and Bootstrap Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        /* Include the same styles from the previous version */
         body {
             font-family: "Poppins", sans-serif;
             margin: 0;
@@ -178,26 +201,27 @@
     <div class="right">
         <h2>Sign up as an Employer</h2>
 
-        <form onsubmit="registerEmployer(event)">
+        <form method="POST" action="signup_employee.php">
             <div class="form-group">
                 <label for="company-name">Company Name</label>
-                <input type="text" id="company-name" placeholder="Enter your company name" required>
+                <input type="text" id="company-name" name="company_name" placeholder="Enter your company name" required>
             </div>
             <div class="form-group">
                 <label for="contact-email">Email Address</label>
-                <input type="email" id="contact-email" placeholder="Enter your email address" required>
+                <input type="email" id="contact-email" name="email" placeholder="Enter your email address" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Create a password" required>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
                 <i class="fas fa-eye show-password" onclick="togglePassword()"></i>
             </div>
             <button type="submit" class="signup-button" disabled>Sign up</button>
         </form>
 
+        <?php if (isset($error)) { echo "<p style='color:red; text-align:center;'>$error</p>"; } ?>
+
         <div class="signup-link">
             <p>Already have an account? <a href="signin_employer.php">Sign in</a></p>
-
         </div>
     </div>
 </div>
@@ -224,12 +248,6 @@
         const password = document.getElementById('password').value;
         const companyName = document.getElementById('company-name').value;
         document.querySelector('.signup-button').disabled = !(email && password && companyName);
-    }
-
-    function registerEmployer(event) {
-        event.preventDefault();
-        // Your form submission logic for employer sign-up goes here.
-        alert("Employer registered successfully!");
     }
 </script>
 

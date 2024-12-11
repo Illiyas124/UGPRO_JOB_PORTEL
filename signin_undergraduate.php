@@ -1,3 +1,41 @@
+<?php
+// Start the session at the very top to avoid headers already being sent error
+session_start(); 
+
+// Include the database configuration
+include('conf/dbconf.php'); // Ensure the path to dbconf.php is correct
+
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Collect form data
+    $email = mysqli_real_escape_string($connect, $_POST['email']);
+    $password = $_POST['password']; // Plain password, will be verified against the hashed password in the database
+
+    // Query to check if the email exists in the database
+    $sql = "SELECT * FROM undergraduate WHERE email = '$email'";
+    $result = mysqli_query($connect, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        // Fetch user data from the database
+        $user = mysqli_fetch_assoc($result);
+
+        // Verify the password against the hashed password stored in the database
+        if (password_verify($password, $user['password'])) {
+            // Store user data in session
+            $_SESSION['user'] = $user;
+
+            // Redirect to the profile page
+            header("Location: profile_undergraduate.php");
+            exit();
+        } else {
+            $error = "Invalid email or password.";
+        }
+    } else {
+        $error = "No account found with that email address.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,18 +116,25 @@
 <div class="container">
     <h2>Sign in as an Undergraduate</h2>
 
-    <form onsubmit="signinUndergraduate(event)">
+    <form method="POST">
         <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="Enter your email address" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <i class="fas fa-eye show-password" onclick="togglePassword()"></i>
         </div>
         <button type="submit" class="signin-button">Sign in</button>
     </form>
+
+    <?php
+    // Display any error message
+    if (isset($error)) {
+        echo "<p style='color: red; text-align: center;'>$error</p>";
+    }
+    ?>
 
     <div class="signup-link">
         <p>Don't have an account? <a href="signup_undergraduate.php">Sign up as an Undergraduate</a></p>
@@ -106,58 +151,6 @@
         } else {
             passwordField.type = 'password';
             showPasswordText.textContent = 'Show';
-        }
-    }
-
-    function signinUndergraduate(event) {
-        event.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        const users = [
-            {
-                email: 'undergraduate@gmail.com',
-                password: '1234',
-                name: 'John Doe',
-                course: 'Computer Science',
-                skills: 'JavaScript, Python, HTML/CSS',
-                projects: 'Portfolio Website, Inventory Management System',
-                github: 'https://github.com/johndoe',
-                linkedin: 'https://linkedin.com/in/johndoe',
-                profileImage: 'https://via.placeholder.com/150'
-            },
-            {
-                email: 'jane.doe@gmail.com',
-                password: 'abcd',
-                name: 'Jane Smith',
-                course: 'Software Engineering',
-                skills: 'Java, C++, SQL',
-                projects: 'Inventory Management, E-commerce Website',
-                github: 'https://github.com/janedoe',
-                linkedin: 'https://linkedin.com/in/janedoe',
-                profileImage: 'https://via.placeholder.com/150'
-            },
-            {
-                email: 'michael.smith@gmail.com',
-                password: 'xyz123',
-                name: 'Michael Smith',
-                course: 'Information Technology',
-                skills: 'PHP, MySQL, CSS',
-                projects: 'Blog Platform, Task Management System',
-                github: 'https://github.com/michaelsmith',
-                linkedin: 'https://linkedin.com/in/michaelsmith',
-                profileImage: 'https://via.placeholder.com/150'
-            }
-        ];
-
-        const user = users.find(u => u.email === email && u.password === password);
-
-        if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            window.location.href = "profile_undergraduate.php";
-        } else {
-            alert("Invalid email or password.");
         }
     }
 </script>
