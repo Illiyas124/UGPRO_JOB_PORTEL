@@ -20,32 +20,10 @@
 
         <!-- Header  Section-->
 
-        <header>
-            <div id="navbar" class="obj-width" >
-                <a href="index.html" ><img class="logo" src="images/logo.png"></a>
+        
+        <?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php"; include_once($IPATH."header.html"); ?>
 
-                <i id="bar" class='bx bx-menu '></i>
-                <ul id="menu">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Features <i class='bx bx-caret-down'></i></a>
-                        <ul class="dropDown">
-                            <li><a href="#jobs">Jobs in demand</a></li>
-                            <li><a href="#whyChooseUs">Why Choose Us?</a></li>
-                            <li><a href="#latestJobListings">Latest Job Listings</a></li>
-                            <li><a href="#ourPartnerCompanies">Our Partner Companies</a></li>
-                            <li><a href="#meetTheTeam">Meet the Team</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="jobs/job.html">Browse Job</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <!--<button id="w-btn">Register</button>-->
-                    <button onclick="showRegisterOptions()" id="w-btn">Register</button>
 
-                </ul>
-
-                
-            </div>
-        </header>
 
         <!-- Register Options Modal -->
 <div id="registerModal" class="modal" style="display: none;">
@@ -318,52 +296,7 @@
 
 -->
 
-<footer class="footer">
-    <div class="obj-width">
-        <div class="top">
-            <div>
-                <img class="logo" 
-                src="images/logo.png" alt="">
-                <p>University-powered job portal,Showcasing top telants to lead...</p>
-            </div>
-            <div>
-                <a href="#" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
-                <a href="#" title="GitHub"><i class='bx bxl-github'></i></a>
-                <a href="#" title="Twitter"><i class='bx bxl-twitter'></i></a>
-            </div>
-        </div>
-        <div class="bottom">
-            <div>
-                <h3>Project</h3>
-                <a href="#">Changelog</a>
-                <a href="#">Status</a>
-                <a href="#">Licence</a>
-                <a href="#">All version</a>
-            </div>
-            <div>
-                <h3>Community</h3>
-                <a href="#">Github</a>
-                <a href="#">Issues</a>
-                <a href="#">Licence</a>
-                <a href="#">All version</a>
-            </div>
-            <div>
-                <h3>Help</h3>
-                <a href="#">Support</a>
-                <a href="#">Troubleshooting</a>
-                <a href="#">Contact Us</a>
-                
-            </div>
-            <div>
-                <h3>Others</h3>
-                <a href="#">Teerms of Service</a>
-                <a href="#">Privacy</a>
-                <a href="#">Licence</a>
-                
-            </div>
-        </div>
-    </div>
-</footer>
+<?php $IPATH = $_SERVER["DOCUMENT_ROOT"]."/assets/php"; include($IPATH."footer.html"); ?>
 
 
     
