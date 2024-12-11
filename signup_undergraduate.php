@@ -1,3 +1,38 @@
+<?php
+    // Database connection
+    define('SERVERNAME', '127.0.0.1');  // Or 'localhost'
+    define('USERNAME', 'root');
+    define('PASSWORD', 'mariadb');  
+    define('DBNAME', 'vavuniyauniversity');
+
+    // Create database connection
+    $connect = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+
+    // Check connection
+    if (!$connect) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Collect form data
+        $fullName = mysqli_real_escape_string($connect, $_POST['fullName']);
+        $email = mysqli_real_escape_string($connect, $_POST['email']);
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hash
+
+        // Insert into database
+        $sql = "INSERT INTO undergraduate (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
+
+        if (mysqli_query($connect, $sql)) {
+            echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
+            echo "<script>window.location.href = 'signin_undergraduate.php';</script>";
+            exit();
+        } else {
+            echo "<script>alert('Error: " . mysqli_error($connect) . "');</script>";
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +42,7 @@
     <!-- Bootstrap and Bootstrap Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        /* Add your styles here */
         body {
             font-family: "Poppins", sans-serif;
             margin: 0;
@@ -14,19 +50,19 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fafafa; /* UgPro theme background color */
+            background-color: #fafafa;
         }
         .container {
             display: flex;
             background-color: white;
-            width: 60%;
+            width: 80%;
             max-width: 900px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
         .left {
-            background-color: #1f4a40; /* Logo background color */
+            background-color: #1f4a40;
             color: white;
             width: 40%;
             display: flex;
@@ -71,7 +107,7 @@
             width: auto;
             padding: 12px 40px;
             font-size: 1.2em;
-            background-color: #0073e6; /* Primary theme color */
+            background-color: #0073e6;
             color: white;
             border: none;
             border-radius: 50px;
@@ -154,25 +190,25 @@
 
 <div class="container">
     <div class="left">
-        <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="images/logo.png" width="200" height="200" alt="UgPro Logo" class="me-2">      
+        <a class="navbar-brand" href="index.php">
+            <img src="images/logo.png" width="200" height="200" alt="UgPro Logo">      
         </a>
         <strong class="ugpro-logo">UgPro</strong>
     </div>
     <div class="right">
         <h2>Sign up to UgPro</h2>
-        <form>
+        <form method="POST">
             <div class="form-group">
                 <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="Enter your email address" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Create a password" required>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
             </div>
             <button type="submit" class="signup-button">Sign Up</button>
         </form>
@@ -188,36 +224,9 @@
 
         <div class="signin-link">
             <p>Already have an account? <a href="signin_undergraduate.php">Sign in</a></p>
-
         </div>
     </div>
 </div>
-
-<?php 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Collect form data
-        $fullName = mysqli_real_escape_string($connect, $_POST['fullName']);
-        $email = mysqli_real_escape_string($connect, $_POST['email']);
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hash
-    
-        // Debug: Check if data is being passed correctly
-        echo "Full Name: " . $fullName . "<br>";
-        echo "Email: " . $email . "<br>";
-    
-        // Insert into database
-        $sql = "INSERT INTO undergraduate (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
-    
-        if (mysqli_query($connect, $sql)) {
-            echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
-            echo "<script>window.location.href = 'signin_undergraduate.php';</script>";
-            exit();
-        } else {
-            // Debug: Check the error message
-            echo "<script>alert('Error: " . mysqli_error($connect) . "');</script>";
-        }
-    }
-    
-?>
 
 </body>
 </html>
