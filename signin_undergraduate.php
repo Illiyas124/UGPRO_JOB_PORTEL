@@ -8,16 +8,19 @@ include('conf/dbconf.php'); // Ensure the path to dbconf.php is correct
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Collect form data
-    $email = mysqli_real_escape_string($connect, $_POST['email']);
+    $email = trim($_POST['email']);
     $password = $_POST['password']; // Plain password, will be verified against the hashed password in the database
 
-    // Query to check if the email exists in the database
-    $sql = "SELECT * FROM undergraduate WHERE email = '$email'";
-    $result = mysqli_query($connect, $sql);
+    // Use prepared statements to check if the email exists in the database
+    $stmt = $connect->prepare("SELECT * FROM undergraduate WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (mysqli_num_rows($result) > 0) {
+    // Check if any user with the given email exists
+    if ($result->num_rows > 0) {
         // Fetch user data from the database
-        $user = mysqli_fetch_assoc($result);
+        $user = $result->fetch_assoc();
 
         // Verify the password against the hashed password stored in the database
         if (password_verify($password, $user['password'])) {
@@ -33,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $error = "No account found with that email address.";
     }
+
+    // Close the statement
+    $stmt->close();
 }
 ?>
 
