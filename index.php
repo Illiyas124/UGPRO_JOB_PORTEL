@@ -58,6 +58,7 @@
         <h3>Select Your Role</h3>
         <button onclick="redirectTo('undergraduate')" class="modal-button">I am an Undergraduate</button>
         <button onclick="redirectTo('employer')" class="modal-button">I am an Employer</button>
+        
     </div>
 </div>
 

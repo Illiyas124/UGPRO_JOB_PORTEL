@@ -8,7 +8,12 @@ if (!isset($_SESSION['fullname'])) {
 }
 
 // Fetch user data from the session
-$fullname = htmlspecialchars($_SESSION['fullname']); // Use the session variable directly
+$full_name = htmlspecialchars($_SESSION['fullname']);
+$course = isset($_SESSION['course']) ? htmlspecialchars($_SESSION['course']) : 'Not specified';
+$skills = isset($_SESSION['skills']) ? htmlspecialchars($_SESSION['skills']) : 'No skills provided';
+$projects = isset($_SESSION['projects']) ? htmlspecialchars($_SESSION['projects']) : 'No projects added';
+$github = isset($_SESSION['github']) ? htmlspecialchars($_SESSION['github']) : '#';
+$linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin']) : '#';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +24,6 @@ $fullname = htmlspecialchars($_SESSION['fullname']); // Use the session variable
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Your existing styles from the provided code */
         body {
             font-family: "Poppins", sans-serif;
             margin: 0;
@@ -92,8 +96,8 @@ $fullname = htmlspecialchars($_SESSION['fullname']); // Use the session variable
 <body>
     <!-- Navbar with welcome message and logout button -->
     <div class="navbar">
-        <span class="welcome-message">Welcome, <?php echo htmlspecialchars($user['fullname']); ?></span>
-        <form method="POST" action="logout.php" style="margin: 0;">
+        <span class="welcome-message">Welcome, <?php echo $full_name; ?></span>
+        <form method="POST" action="index.php" style="margin: 0;">
             <button class="logout-button" type="submit">Logout</button>
         </form>
     </div>
@@ -101,20 +105,19 @@ $fullname = htmlspecialchars($_SESSION['fullname']); // Use the session variable
     <div class="container">
         <h2>Your Profile</h2>
         <div class="profile-card">
-           <!-- <img src="<?php echo htmlspecialchars($user['profile_image']); ?>" alt="<?php echo htmlspecialchars($user['fullname']); ?>" class="profile-image">-->
-            <h3><?php echo htmlspecialchars($user['fullname']); ?></h3>
+            <h3><?php echo $full_name; ?></h3>
             <div class="profile-info">
-                <label>Course:</label> <?php echo htmlspecialchars($user['course']); ?>
+                <label>Course:</label> <?php echo $course; ?>
             </div>
             <div class="profile-info">
-                <label>Skills:</label> <?php echo htmlspecialchars($user['skills']); ?>
+                <label>Skills:</label> <?php echo $skills; ?>
             </div>
             <div class="profile-info">
-                <label>Projects:</label> <?php echo htmlspecialchars($user['projects']); ?>
+                <label>Projects:</label> <?php echo $projects; ?>
             </div>
             <div class="social-media">
-                <a href="<?php echo htmlspecialchars($user['github']); ?>" target="_blank"><i class="bi bi-github"></i> GitHub</a>
-                <a href="<?php echo htmlspecialchars($user['linkedin']); ?>" target="_blank"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                <a href="<?php echo $github; ?>" target="_blank"><i class="bi bi-github"></i> GitHub</a>
+                <a href="<?php echo $linkedin; ?>" target="_blank"><i class="bi bi-linkedin"></i> LinkedIn</a>
             </div>
         </div>
     </div>

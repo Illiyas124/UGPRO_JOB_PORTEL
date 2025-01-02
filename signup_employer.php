@@ -1,24 +1,44 @@
 <?php
-// Include the database connection
-include('conf/dbconf.php');
+    // Database connection
+    define('SERVERNAME', '127.0.0.1');  // Or 'localhost'
+    define('USERNAME', 'root');
+    define('PASSWORD', 'mariadb');  
+    define('DBNAME', 'vavuniyauniversity');
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Collect form data
-    $companyName = mysqli_real_escape_string($connect, $_POST['company_name']);
-    $email = mysqli_real_escape_string($connect, $_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+    // Create database connection
+    $connect = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 
-    // Insert into the employer table
-    $sql = "INSERT INTO employers (company_name, email, password) VALUES ('$companyName', '$email', '$password')";
-    if (mysqli_query($connect, $sql)) {
-        // Redirect to employer login page
-        header("Location: signin_employer.php");
-        exit();
-    } else {
-        $error = "Error: " . mysqli_error($connect);
+    // Check connection
+    if (!$connect) {
+        die("Connection failed: " . mysqli_connect_error());
     }
-}
+
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Collect form data
+        $companyName = mysqli_real_escape_string($connect, $_POST['companyName']);
+        $email = mysqli_real_escape_string($connect, $_POST['email']);
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hash
+
+        // Check if the email already exists
+        $sqlCheck = "SELECT * FROM employer WHERE email = '$email'";
+        $result = mysqli_query($connect, $sqlCheck);
+
+        if (mysqli_num_rows($result) > 0) {
+            echo "<script>alert('Email is already registered.');</script>";
+        } else {
+            // Insert new employer into the database
+            $sql = "INSERT INTO employer (company_name, email, password) VALUES ('$companyName', '$email', '$password')";
+
+            if (mysqli_query($connect, $sql)) {
+                echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
+                echo "<script>window.location.href = 'signin_employer.php';</script>";
+                exit();
+            } else {
+                echo "<script>alert('Error: " . mysqli_error($connect) . "');</script>";
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UgPro Employer Sign Up</title>
+    <title>UgPro - Employer Sign Up</title>
+    <!-- Bootstrap and Bootstrap Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        /* Include the same styles from the previous version */
+        /* Add your styles here */
         body {
             font-family: "Poppins", sans-serif;
             margin: 0;
@@ -42,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .container {
             display: flex;
             background-color: white;
-            width: 60%;
+            width: 80%;
             max-width: 900px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -65,14 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         .left p {
             font-size: 1.2em;
-            margin: 10px;
+            margin-top: 10px;
         }
         .right {
             width: 60%;
             padding: 40px;
         }
         .right h2 {
-            margin: 0;
             font-size: 2em;
             margin-bottom: 20px;
         }
@@ -84,20 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: bold;
             margin-bottom: 5px;
         }
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="password"] {
+        .form-group input {
             width: 100%;
             padding: 10px;
             font-size: 1em;
             border: 1px solid #ccc;
             border-radius: 4px;
-        }
-        .form-group .show-password {
-            float: right;
-            font-size: 0.9em;
-            cursor: pointer;
-            color: #888;
         }
         .signup-button {
             width: auto;
@@ -113,39 +125,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-left: auto;
             margin-right: auto;
         }
-        .signup-button:disabled {
-            background-color: #e0e0e0;
-            cursor: not-allowed;
-        }
-        .signup-link {
+
+        .signin-link {
             text-align: center;
             margin-top: 20px;
             font-size: 0.9em;
         }
-        .signup-link a {
+        .signin-link a {
             color: #57bef2;
             text-decoration: none;
         }
         .ugpro-logo {
             font-size: 40px;
         }
-        .divider {
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .divider span {
-            background-color: white;
-            padding: 0 10px;
-            font-weight: bold;
-        }
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex-grow: 1;
-            border-top: 2px solid #ccc;
-        }
+
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
@@ -154,37 +147,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             .left {
                 width: 100%;
-                max-width: 100%;
                 padding: 20px 0;
             }
             .right {
                 padding: 20px;
                 text-align: center;
-            }
-        }
-        @media (max-width: 768px) {
-            .signup-button {
-                padding: 12px;
-                font-size: 1em;
-            }
-        }
-        @media (max-width: 480px) {
-            .left h1 {
-                font-size: 2em;
-            }
-            .right h2 {
-                font-size: 1.5em;
-            }
-            .form-group input {
-                padding: 8px;
-                font-size: 0.9em;
-            }
-            .signup-button {
-                padding: 10px;
-                font-size: 0.9em;
-            }
-            .signup-link {
-                font-size: 0.8em;
             }
         }
     </style>
@@ -193,63 +160,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
     <div class="left">
-        <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="images/logo.png" width="200" height="200" alt="UgPro Logo" class="me-2">
+        <a class="navbar-brand" href="index.php">
+            <img src="images/logo.png" width="200" height="200" alt="UgPro Logo">      
         </a>
         <strong class="ugpro-logo">UgPro</strong>
     </div>
     <div class="right">
-        <h2>Sign up as an Employer</h2>
-
-        <form method="POST" action="signup_employee.php">
+        <h2>Sign up to UgPro as Employer</h2>
+        <form method="POST">
             <div class="form-group">
-                <label for="company-name">Company Name</label>
-                <input type="text" id="company-name" name="company_name" placeholder="Enter your company name" required>
+                <label for="companyName">Company Name</label>
+                <input type="text" id="companyName" name="companyName" placeholder="Enter your company name" required>
             </div>
             <div class="form-group">
-                <label for="contact-email">Email Address</label>
-                <input type="email" id="contact-email" name="email" placeholder="Enter your email address" required>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Create a password" required>
-                <i class="fas fa-eye show-password" onclick="togglePassword()"></i>
             </div>
-            <button type="submit" class="signup-button" disabled>Sign up</button>
+            <button type="submit" class="signup-button">Sign Up</button>
         </form>
 
-        <?php if (isset($error)) { echo "<p style='color:red; text-align:center;'>$error</p>"; } ?>
-
-        <div class="signup-link">
+        <div class="signin-link">
             <p>Already have an account? <a href="signin_employer.php">Sign in</a></p>
         </div>
     </div>
 </div>
-
-<script>
-    function togglePassword() {
-        const passwordField = document.getElementById('password');
-        const showPasswordText = document.querySelector('.show-password');
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            showPasswordText.textContent = 'Hide';
-        } else {
-            passwordField.type = 'password';
-            showPasswordText.textContent = 'Show';
-        }
-    }
-
-    document.getElementById('contact-email').addEventListener('input', toggleButton);
-    document.getElementById('password').addEventListener('input', toggleButton);
-    document.getElementById('company-name').addEventListener('input', toggleButton);
-
-    function toggleButton() {
-        const email = document.getElementById('contact-email').value;
-        const password = document.getElementById('password').value;
-        const companyName = document.getElementById('company-name').value;
-        document.querySelector('.signup-button').disabled = !(email && password && companyName);
-    }
-</script>
 
 </body>
 </html>

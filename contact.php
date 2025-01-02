@@ -30,7 +30,7 @@
                     <li><a href="../index.php">Home</a></li>
                     
                     <li><a href="../contact.php">Contact Us</a></li>
-                    <button id="w-btn">Register</button>
+                    <button id="w-btn" >Register</button>
                 </ul>
 
                 
