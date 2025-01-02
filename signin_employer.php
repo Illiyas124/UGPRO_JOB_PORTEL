@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fafafa;
+            background-color: #1f4a40;
         }
         .container {
             width: 50%;

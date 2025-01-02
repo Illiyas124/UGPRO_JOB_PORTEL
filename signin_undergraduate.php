@@ -1,46 +1,39 @@
 <?php
-// Start the session at the very top to avoid headers already being sent error
-session_start(); 
+require_once 'conf/dbconf.php';
+session_start();
+if (isset($_POST['login'])) {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    
+    // Prepare the SQL query to fetch the username and hashed password
+    $sql = "SELECT full_name,email, password FROM undergraduate WHERE email='$email'";
+    $result = $connect->query($sql);
 
-// Include the database configuration
-include('conf/dbconf.php'); // Ensure the path to dbconf.php is correct
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Collect form data
-    $email = trim($_POST['email']);
-    $password = $_POST['password']; // Plain password, will be verified against the hashed password in the database
-
-    // Use prepared statements to check if the email exists in the database
-    $stmt = $connect->prepare("SELECT * FROM undergraduate WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Check if any user with the given email exists
     if ($result->num_rows > 0) {
-        // Fetch user data from the database
-        $user = $result->fetch_assoc();
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row["password"]; // Fetch the hashed password
 
-        // Verify the password against the hashed password stored in the database
-        if (password_verify($password, $user['password'])) {
-            // Store user data in session
-            $_SESSION['user'] = $user;
-
-            // Redirect to the profile page
+        // Verify the password
+        if (password_verify($password, $hashedPassword)) {
+            //session_start(); // Start the session
+            
+            $_SESSION["fullname"] = $row["full_name"];
+            //$_SESSION['role'] = $row['role'];
             header("Location: profile_undergraduate.php");
-            exit();
+            exit(); // Ensure no further code runs after redirection
         } else {
-            $error = "Invalid email or password.";
+            $error = "Invalid username or password.";
         }
     } else {
-        $error = "No account found with that email address.";
+        $error = "Invalid username or password.";
     }
 
-    // Close the statement
-    $stmt->close();
+    $connect->close(); // Close the database connection
+    header("Location: signin_undergraduate.php?error=" . urlencode($error));
+    exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UgPro Undergraduate Sign In</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             font-family: "Poppins", sans-serif;
@@ -57,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fafafa;
+            background-color: #1f4a40;
         }
         .container {
             width: 50%;
@@ -89,12 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .form-group .show-password {
-            float: right;
-            font-size: 0.9em;
-            cursor: pointer;
-            color: #888;
-        }
         .signin-button {
             width: 100%;
             padding: 12px;
@@ -122,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h2>Sign in as an Undergraduate</h2>
 
-    <form method="POST">
+    <form method="POST" action="signin_undergraduate.php">
         <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="Enter your email address" required>
@@ -130,9 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            <i class="fas fa-eye show-password" onclick="togglePassword()"></i>
         </div>
-        <button type="submit" class="signin-button">Sign in</button>
+        <button type="submit" class="signin-button" name='login'>Sign in</button>
     </form>
 
     <?php
@@ -146,20 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Don't have an account? <a href="signup_undergraduate.php">Sign up as an Undergraduate</a></p>
     </div>
 </div>
-
-<script>
-    function togglePassword() {
-        const passwordField = document.getElementById('password');
-        const showPasswordText = document.querySelector('.show-password');
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            showPasswordText.textContent = 'Hide';
-        } else {
-            passwordField.type = 'password';
-            showPasswordText.textContent = 'Show';
-        }
-    }
-</script>
 
 </body>
 </html>
