@@ -5,8 +5,8 @@ if (isset($_POST['login'])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
     
-    // Prepare the SQL query to fetch the username and hashed password
-    $sql = "SELECT full_name,email, password FROM undergraduate WHERE email='$email'";
+    // Prepare the SQL query to fetch user details
+    $sql = "SELECT full_name, email, password, course, skills, projects FROM undergraduate WHERE email='$email'";
     $result = $connect->query($sql);
 
     if ($result->num_rows > 0) {
@@ -15,10 +15,10 @@ if (isset($_POST['login'])) {
 
         // Verify the password
         if (password_verify($password, $hashedPassword)) {
-            //session_start(); // Start the session
-            
             $_SESSION["fullname"] = $row["full_name"];
-            //$_SESSION['role'] = $row['role'];
+            $_SESSION["course"] = $row["course"];
+            $_SESSION["skills"] = $row["skills"];
+            $_SESSION["projects"] = $row["projects"];
             header("Location: profile_undergraduate.php");
             exit(); // Ensure no further code runs after redirection
         } else {
@@ -33,7 +33,6 @@ if (isset($_POST['login'])) {
     exit;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

@@ -55,89 +55,7 @@
     <title>UgPro - Employer Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            padding-top: 60px; /* Adjusted padding for fixed navbar */
-        }
-        .navbar {
-            background-color: #1f4a40;
-            padding: 10px 20px;
-            position: fixed; /* Fixed position */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000; /* Ensures it stays on top */
-        }
-        .navbar .welcome-message {
-            font-size: 1em;
-            color: white;
-        }
-        .navbar .logout-button {
-            background-color: #d9534f;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            font-size: 0.9em;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 20px auto;
-        }
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .card-header {
-            background-color: #0073e6;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px 8px 0 0;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .profile-info {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            color: #333;
-        }
-        .profile-info label {
-            font-weight: bold;
-        }
-        .social-media a {
-            margin-right: 15px;
-            text-decoration: none;
-            color: #0073e6;
-            font-size: 1.1em;
-        }
-        .btn-primary {
-            background-color: #0073e6;
-            border-color: #0073e6;
-            color: white;
-        }
-        .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: block;
-            margin-left: auto;
-            margin-right: auto; /* Centers the image */
-        }
-    </style>
-
+  
 <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -180,7 +98,7 @@
         margin-bottom: 20px;
     }
     .card-header {
-        background-color: #0073e6;
+        background-color: #1f4a40;
         color: white;
         text-align: center;
         padding: 15px;

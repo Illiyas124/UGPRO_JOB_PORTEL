@@ -19,9 +19,12 @@
         $fullName = mysqli_real_escape_string($connect, $_POST['fullName']);
         $email = mysqli_real_escape_string($connect, $_POST['email']);
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hash
+        $course = mysqli_real_escape_string($connect, $_POST['course']);
+        $skills = mysqli_real_escape_string($connect, $_POST['skills']);
+        $projects = mysqli_real_escape_string($connect, $_POST['projects']);
 
         // Insert into database
-        $sql = "INSERT INTO undergraduate (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
+        $sql = "INSERT INTO undergraduate (full_name, email, password, course, skills, projects) VALUES ('$fullName', '$email', '$password', '$course', '$skills', '$projects')";
 
         if (mysqli_query($connect, $sql)) {
             echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
@@ -73,19 +76,19 @@
             text-align: center;
         }
         .left h1 {
-            font-size: 3em;
+            font-size: 2.5em;
             margin: 0;
         }
         .left p {
-            font-size: 1.2em;
+            font-size: 1em;
             margin-top: 10px;
         }
         .right {
             width: 60%;
-            padding: 40px;
+            padding: 30px;
         }
         .right h2 {
-            font-size: 2em;
+            font-size: 1.8em;
             margin-bottom: 20px;
         }
         .form-group {
@@ -96,7 +99,8 @@
             font-weight: bold;
             margin-bottom: 5px;
         }
-        .form-group input {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
             padding: 10px;
             font-size: 1em;
@@ -105,8 +109,8 @@
         }
         .signup-button {
             width: auto;
-            padding: 12px 40px;
-            font-size: 1.2em;
+            padding: 10px 30px;
+            font-size: 1em;
             background-color: #0073e6;
             color: white;
             border: none;
@@ -149,7 +153,7 @@
             text-decoration: none;
         }
         .ugpro-logo {
-            font-size: 40px;
+            font-size: 30px;
         }
         .divider {
             margin: 20px 0;
@@ -184,6 +188,22 @@
                 text-align: center;
             }
         }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                max-width: none;
+            }
+            .right {
+                padding: 15px;
+            }
+            .signup-button {
+                padding: 10px 20px;
+            }
+            .form-group input, .form-group textarea {
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -191,7 +211,7 @@
 <div class="container">
     <div class="left">
         <a class="navbar-brand" href="index.php">
-            <img src="images/logo.png" width="200" height="200" alt="UgPro Logo">      
+            <img src="images/logo.png" width="150" height="150" alt="UgPro Logo">      
         </a>
         <strong class="ugpro-logo">UgPro</strong>
     </div>
@@ -209,6 +229,18 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="course">Course</label>
+                <input type="text" id="course" name="course" placeholder="Enter your course" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <textarea id="skills" name="skills" placeholder="Enter your skills" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="projects">Projects</label>
+                <textarea id="projects" name="projects" placeholder="Enter your projects" required></textarea>
             </div>
             <button type="submit" class="signup-button">Sign Up</button>
         </form>
