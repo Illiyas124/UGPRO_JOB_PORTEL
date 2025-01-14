@@ -14,6 +14,7 @@ $skills = isset($_SESSION['skills']) ? htmlspecialchars($_SESSION['skills']) : '
 $projects = isset($_SESSION['projects']) ? htmlspecialchars($_SESSION['projects']) : 'No projects added';
 $github = isset($_SESSION['github']) ? htmlspecialchars($_SESSION['github']) : '#';
 $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin']) : '#';
+$profile_image = isset($_SESSION['profile_image']) ? $_SESSION['profile_image'] : 'uploads/default_profile_image.jpg'; // Default image
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +31,7 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
             padding: 0;
             background-color: #f9f9f9;
         }
+
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -38,9 +40,11 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
             background-color: #1f4a40;
             color: white;
         }
+
         .navbar .welcome-message {
             font-size: 1em;
         }
+
         .navbar .logout-button {
             background-color: #d9534f;
             color: white;
@@ -50,15 +54,18 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
             border-radius: 4px;
             cursor: pointer;
         }
+
         .container {
             width: 90%;
             max-width: 1000px;
             margin: 20px auto;
         }
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .profile-card {
             background-color: white;
             padding: 20px;
@@ -67,9 +74,11 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
             text-align: center;
             margin-bottom: 20px;
         }
+
         .profile-card:hover {
             transform: translateY(-10px);
         }
+
         .profile-image {
             width: 150px;
             height: 150px;
@@ -78,18 +87,44 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
             margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .profile-info {
             margin-bottom: 10px;
             text-align: left;
         }
+
         .profile-info label {
             font-weight: bold;
         }
+
         .social-media a {
             margin-right: 15px;
             text-decoration: none;
             color: #0073e6;
             font-size: 1.1em;
+        }
+
+        .social-media a:hover {
+            color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-card {
+                padding: 15px;
+            }
+
+            .profile-info {
+                font-size: 0.9em;
+            }
+
+            .social-media a {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -105,6 +140,7 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
     <div class="container">
         <h2>Your Profile</h2>
         <div class="profile-card">
+            <img src="<?php echo $profile_image; ?>" alt="Profile Image" class="profile-image">
             <h3><?php echo $full_name; ?></h3>
             <div class="profile-info">
                 <label>Course:</label> <?php echo $course; ?>
@@ -121,5 +157,6 @@ $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin'
             </div>
         </div>
     </div>
+
 </body>
 </html>
