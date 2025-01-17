@@ -1,50 +1,57 @@
 <?php
-    session_start();
+session_start();
 
-    // Database connection
-    define('SERVERNAME', '127.0.0.1');  // Or 'localhost'
-    define('USERNAME', 'root');
-    define('PASSWORD', 'mariadb');
-    define('DBNAME', 'vavuniyauniversity');
+// Improved error handling
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    // Create database connection
-    $connect = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+// Database connection
+define('SERVERNAME', '127.0.0.1');  // Or 'localhost'
+define('USERNAME', 'root');
+define('PASSWORD', 'mariadb');
+define('DBNAME', 'vavuniyauniversity');
 
-    // Check connection
-    if (!$connect) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+// Create database connection
+$connect = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 
-    // Check if the employer is logged in
-    if (!isset($_SESSION['employer_id'])) {
-        // Redirect to login page if not logged in
-        echo "<script>alert('Please login first.');</script>";
-        echo "<script>window.location.href = 'signin_employer.php';</script>";
-        exit();
-    }
+// Check connection
+if (!$connect) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-    // Fetch employer data from the database
-    $employer_id = $_SESSION['employer_id'];
-    $sql = "SELECT * FROM employer WHERE id = '$employer_id'";
-    $result = mysqli_query($connect, $sql);
+// Check if the employer is logged in
+if (!isset($_SESSION['employer_id'])) {
+    // Redirect to login page if not logged in
+    echo "<script>alert('Please login first.');</script>";
+    echo "<script>window.location.href = 'signin_employer.php';</script>";
+    exit();
+}
 
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
-        $company_name = $row['company_name'];
-        $email = $row['email'];
-    } else {
-        echo "<script>alert('Employer data not found.');</script>";
-        echo "<script>window.location.href = 'signin_employer.php';</script>";
-        exit();
-    }
+// Fetch employer data from the database using prepared statements
+$employer_id = $_SESSION['employer_id'];
+$stmt = $connect->prepare("SELECT * FROM employer WHERE id = ?");
+$stmt->bind_param("i", $employer_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    // Fetch all undergraduates' data
-    $undergrad_sql = "SELECT * FROM undergraduate";
-    $undergrad_result = mysqli_query($connect, $undergrad_sql);
+if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+    $company_name = htmlspecialchars($row['company_name']);
+    $email = htmlspecialchars($row['email']);
+} else {
+    echo "<script>alert('Employer data not found.');</script>";
+    echo "<script>window.location.href = 'signin_employer.php';</script>";
+    exit();
+}
+$stmt->close();
 
-    if (!$undergrad_result) {
-        die("Error fetching undergraduate profiles: " . mysqli_error($connect));
-    }
+// Fetch all undergraduates' data
+$undergrad_sql = "SELECT * FROM undergraduate";
+$undergrad_result = mysqli_query($connect, $undergrad_sql);
+
+if (!$undergrad_result) {
+    die("Error fetching undergraduate profiles: " . mysqli_error($connect));
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +62,6 @@
     <title>UgPro - Employer Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -139,7 +145,6 @@
             margin-right: auto;
         }
     </style>
-
 </head>
 <body>
 
@@ -164,7 +169,7 @@
         $projects = isset($undergrad_row['projects']) ? htmlspecialchars($undergrad_row['projects']) : 'No projects added';
         $github = isset($undergrad_row['github']) ? htmlspecialchars($undergrad_row['github']) : '#';
         $linkedin = isset($undergrad_row['linkedin']) ? htmlspecialchars($undergrad_row['linkedin']) : '#';
-        $profile_image = isset($undergrad_row['profile_image']) ? $undergrad_row['profile_image'] : 'default-profile.png'; // default image
+        $profile_image = isset($undergrad_row['profile_image']) ? htmlspecialchars($undergrad_row['profile_image']) : 'default-profile.png'; // default image
     ?>
         <div class="card">
             <div class="card-header">

@@ -1,36 +1,43 @@
 <?php
 require_once 'conf/dbconf.php';
 session_start();
+
 if (isset($_POST['login'])) {
-    $email = $_POST["email"];
+    $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
     $password = $_POST["password"];
     
-    // Prepare the SQL query to fetch user details
-    $sql = "SELECT full_name, email, password, course, skills, projects FROM undergraduate WHERE email='$email'";
-    $result = $connect->query($sql);
+    if ($email && $password) {
+        // Prepare the SQL query to fetch user details
+        $stmt = $connect->prepare("SELECT full_name, email, password, course, skills, projects FROM undergraduate WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $hashedPassword = $row["password"]; // Fetch the hashed password
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashedPassword = $row["password"]; // Fetch the hashed password
 
-        // Verify the password
-        if (password_verify($password, $hashedPassword)) {
-            $_SESSION["fullname"] = $row["full_name"];
-            $_SESSION["course"] = $row["course"];
-            $_SESSION["skills"] = $row["skills"];
-            $_SESSION["projects"] = $row["projects"];
-            header("Location: profile_undergraduate.php");
-            exit(); // Ensure no further code runs after redirection
+            // Verify the password
+            if (password_verify($password, $hashedPassword)) {
+                $_SESSION["fullname"] = $row["full_name"];
+                $_SESSION["course"] = $row["course"];
+                $_SESSION["skills"] = $row["skills"];
+                $_SESSION["projects"] = $row["projects"];
+                header("Location: profile_undergraduate.php");
+                exit(); // Ensure no further code runs after redirection
+            } else {
+                $error = "Invalid username or password.";
+            }
         } else {
             $error = "Invalid username or password.";
         }
+
+        $stmt->close();
     } else {
-        $error = "Invalid username or password.";
+        $error = "Please enter a valid email and password.";
     }
 
     $connect->close(); // Close the database connection
-    header("Location: signin_undergraduate.php?error=" . urlencode($error));
-    exit;
 }
 ?>
 

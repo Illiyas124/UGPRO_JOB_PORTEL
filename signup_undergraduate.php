@@ -1,4 +1,8 @@
 <?php
+// Improved error handling
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Database connection constants
 define('SERVERNAME', '127.0.0.1');
 define('USERNAME', 'root');
@@ -15,13 +19,13 @@ if (!$connect) {
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Collect and validate form data
-    $fullName = trim($_POST['fullName']);
-    $email = trim($_POST['email']);
+    // Sanitize and validate form data
+    $fullName = filter_var(trim($_POST['fullName']), FILTER_SANITIZE_STRING);
+    $email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
     $password = $_POST['password'];
-    $course = trim($_POST['course']);
-    $skills = trim($_POST['skills']);
-    $projects = trim($_POST['projects']);
+    $course = filter_var(trim($_POST['course']), FILTER_SANITIZE_STRING);
+    $skills = filter_var(trim($_POST['skills']), FILTER_SANITIZE_STRING);
+    $projects = filter_var(trim($_POST['projects']), FILTER_SANITIZE_STRING);
     
     // Handle image upload
     $profileImage = '';
@@ -29,29 +33,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imageName = $_FILES['profileImage']['name'];
         $imageTmpName = $_FILES['profileImage']['tmp_name'];
         $imageSize = $_FILES['profileImage']['size'];
-        $imageError = $_FILES['profileImage']['error'];
-        
         $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
         $allowedExtensions = ['jpg', 'jpeg', 'png'];
         
-        if (in_array($imageExt, $allowedExtensions)) {
-            if ($imageSize <= 5000000) { // Max size 5MB
-                $newImageName = uniqid('', true) . '.' . $imageExt;
-                $imagePath = 'uploads/profile_images/' . $newImageName;
-                move_uploaded_file($imageTmpName, $imagePath);
-                $profileImage = $imagePath;
-            } else {
-                echo "<script>alert('Image is too large. Max size is 5MB.');</script>";
+        if (in_array($imageExt, $allowedExtensions) && $imageSize <= 5000000) { // Max size 5MB
+            $newImageName = uniqid('', true) . '.' . $imageExt;
+            $imagePath = 'uploads/profile_images/' . $newImageName;
+            if (!file_exists('uploads/profile_images/')) {
+                mkdir('uploads/profile_images/', 0777, true);
             }
+            move_uploaded_file($imageTmpName, $imagePath);
+            $profileImage = $imagePath;
         } else {
-            echo "<script>alert('Invalid image type. Only JPG, JPEG, and PNG are allowed.');</script>";
+            echo "<script>alert('Invalid image type or size. Only JPG, JPEG, PNG allowed and max size 5MB.');</script>";
         }
     }
     
     // Validate required fields
     if (empty($fullName) || empty($email) || empty($password) || empty($course) || empty($skills) || empty($projects)) {
         echo "<script>alert('All fields are required. Please fill out the form completely.');</script>";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!$email) {
         echo "<script>alert('Invalid email format.');</script>";
     } else {
         // Hash the password
@@ -75,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -249,13 +251,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
     <div class="left">
+    <h2>Sign up to UgPro</h2>
+
         <a class="navbar-brand" href="index.php">
             <img src="images/logo.png" width="150" height="150" alt="UgPro Logo">      
         </a>
         <strong class="ugpro-logo">UgPro</strong>
     </div>
     <div class="right">
-        <h2>Sign up to UgPro</h2>
+      
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="fullName">Full Name</label>
@@ -281,6 +285,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="projects">Projects</label>
                 <textarea id="projects" name="projects" placeholder="Enter your projects" required></textarea>
             </div>
+            
+
             <div class="form-group">
                 <label for="profile_image">Profile Image</label>
                 <input type="file" id="profile_image" name="profile_image" accept="image/*">

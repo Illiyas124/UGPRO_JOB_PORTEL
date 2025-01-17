@@ -1,4 +1,8 @@
 <?php
+    // Improved error handling
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
     // Database connection
     define('SERVERNAME', '127.0.0.1');  // Or 'localhost'
     define('USERNAME', 'root');
@@ -16,33 +20,42 @@
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Collect form data
-        $email = mysqli_real_escape_string($connect, $_POST['email']);
+        $email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
         $password = $_POST['password'];
 
-        // Query to fetch employer data from the database
-        $sql = "SELECT * FROM employer WHERE email = '$email'";
-        $result = mysqli_query($connect, $sql);
+        if ($email) {
+            // Prepare the SQL query to fetch employer data
+            $stmt = $connect->prepare("SELECT * FROM employer WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if (mysqli_num_rows($result) == 1) {
-            // Employer exists, verify the password
-            $row = mysqli_fetch_assoc($result);
-            if (password_verify($password, $row['password'])) {
-                // Password is correct, start the session and redirect to the employer dashboard
-                session_start();
-                $_SESSION['employer_id'] = $row['id'];
-                $_SESSION['company_name'] = $row['company_name'];
-                echo "<script>alert('Login successful! Redirecting to your dashboard.');</script>";
-                echo "<script>window.location.href = 'profile_employer.php';</script>";
-                exit();
+            if ($result->num_rows == 1) {
+                // Employer exists, verify the password
+                $row = $result->fetch_assoc();
+                if (password_verify($password, $row['password'])) {
+                    // Password is correct, start the session and redirect to the employer dashboard
+                    session_start();
+                    $_SESSION['employer_id'] = $row['id'];
+                    $_SESSION['company_name'] = $row['company_name'];
+                    echo "<script>alert('Login successful! Redirecting to your dashboard.');</script>";
+                    echo "<script>window.location.href = 'profile_employer.php';</script>";
+                    exit();
+                } else {
+                    // Incorrect password
+                    echo "<script>alert('Incorrect password. Please try again.');</script>";
+                }
             } else {
-                // Incorrect password
-                echo "<script>alert('Incorrect password. Please try again.');</script>";
+                // Employer does not exist
+                echo "<script>alert('No account found with this email. Please sign up.');</script>";
             }
+            $stmt->close();
         } else {
-            // Employer does not exist
-            echo "<script>alert('No account found with this email. Please sign up.');</script>";
+            echo "<script>alert('Invalid email format.');</script>";
         }
     }
+
+    $connect->close();
 ?>
 
 <!DOCTYPE html>

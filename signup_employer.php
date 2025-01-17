@@ -1,4 +1,8 @@
 <?php
+    // Improved error handling
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
     // Database connection
     define('SERVERNAME', '127.0.0.1');  // Or 'localhost'
     define('USERNAME', 'root');
@@ -16,29 +20,39 @@
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Collect form data
-        $companyName = mysqli_real_escape_string($connect, $_POST['companyName']);
-        $email = mysqli_real_escape_string($connect, $_POST['email']);
+        $companyName = filter_var(trim($_POST['companyName']), FILTER_SANITIZE_STRING);
+        $email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Secure password hash
 
-        // Check if the email already exists
-        $sqlCheck = "SELECT * FROM employer WHERE email = '$email'";
-        $result = mysqli_query($connect, $sqlCheck);
+        if ($email) {
+            // Check if the email already exists
+            $stmt = $connect->prepare("SELECT * FROM employer WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if (mysqli_num_rows($result) > 0) {
-            echo "<script>alert('Email is already registered.');</script>";
-        } else {
-            // Insert new employer into the database
-            $sql = "INSERT INTO employer (company_name, email, password) VALUES ('$companyName', '$email', '$password')";
-
-            if (mysqli_query($connect, $sql)) {
-                echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
-                echo "<script>window.location.href = 'signin_employer.php';</script>";
-                exit();
+            if ($result->num_rows > 0) {
+                echo "<script>alert('Email is already registered.');</script>";
             } else {
-                echo "<script>alert('Error: " . mysqli_error($connect) . "');</script>";
+                // Insert new employer into the database
+                $stmt = $connect->prepare("INSERT INTO employer (company_name, email, password) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $companyName, $email, $password);
+
+                if ($stmt->execute()) {
+                    echo "<script>alert('Sign-up successful! Redirecting to login page.');</script>";
+                    echo "<script>window.location.href = 'signin_employer.php';</script>";
+                    exit();
+                } else {
+                    echo "<script>alert('Error: Unable to register. Please try again later.');</script>";
+                }
+                $stmt->close();
             }
+        } else {
+            echo "<script>alert('Invalid email format.');</script>";
         }
     }
+
+    $connect->close();
 ?>
 
 <!DOCTYPE html>

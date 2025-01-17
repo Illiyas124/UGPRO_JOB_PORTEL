@@ -7,14 +7,22 @@ if (!isset($_SESSION['fullname'])) {
     exit();
 }
 
-// Fetch user data from the session
+// Fetch user data from the session securely
 $full_name = htmlspecialchars($_SESSION['fullname']);
 $course = isset($_SESSION['course']) ? htmlspecialchars($_SESSION['course']) : 'Not specified';
 $skills = isset($_SESSION['skills']) ? htmlspecialchars($_SESSION['skills']) : 'No skills provided';
 $projects = isset($_SESSION['projects']) ? htmlspecialchars($_SESSION['projects']) : 'No projects added';
 $github = isset($_SESSION['github']) ? htmlspecialchars($_SESSION['github']) : '#';
 $linkedin = isset($_SESSION['linkedin']) ? htmlspecialchars($_SESSION['linkedin']) : '#';
-$profile_image = isset($_SESSION['profile_image']) ? $_SESSION['profile_image'] : 'uploads/default_profile_image.jpg'; // Default image
+$profile_image = isset($_SESSION['profile_image']) ? htmlspecialchars($_SESSION['profile_image']) : 'uploads/default_profile_image.jpg'; // Default image
+
+// Logout functionality
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    session_unset();
+    session_destroy();
+    header("Location: signin_undergraduate.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +140,7 @@ $profile_image = isset($_SESSION['profile_image']) ? $_SESSION['profile_image'] 
     <!-- Navbar with welcome message and logout button -->
     <div class="navbar">
         <span class="welcome-message">Welcome, <?php echo $full_name; ?></span>
-        <form method="POST" action="index.php" style="margin: 0;">
+        <form method="POST" action="" style="margin: 0;">
             <button class="logout-button" type="submit">Logout</button>
         </form>
     </div>
